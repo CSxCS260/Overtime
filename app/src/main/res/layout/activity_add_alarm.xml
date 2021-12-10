@@ -26,7 +26,8 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/material_on_surface_emphasis_medium"
-        android:textSize="30dp"/>
+        android:textSize="30dp"
+        android:hint="Wake Up"/>
 
 
     <TextView
@@ -41,7 +42,7 @@
         android:text="Time"
         android:textSize="30dp"
         android:textStyle="bold"/>
-    <EditText
+    <TextView
         android:id="@+id/timeET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,8 +50,11 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/material_on_surface_emphasis_medium"
-        android:textSize="30dp"
-        android:editable="false"/>
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:editable="false"
+        android:background="?attr/editTextBackground"
+        />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/daysChipGroup"
@@ -59,56 +63,64 @@
         app:layout_constraintTop_toBottomOf="@id/timeET"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        app:flow_horizontalAlign="center">
         <com.google.android.material.chip.Chip
             android:id="@+id/sundayChip"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="S"
-            app:checkedIconVisible="false"/>
+            app:checkedIconTint="@color/white"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/mondayChip"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="M"
-            app:checkedIconVisible="false"/>
+            app:checkedIconTint="@color/white"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/tuesdayChip"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="T"
-            app:checkedIconVisible="false"/>
+            app:checkedIconTint="@color/white"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/wednesdayChip"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="W"
-            app:checkedIconVisible="false"/>
+            app:checkedIconTint="@color/white"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/thursdayChip"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="T"
-            app:checkedIconVisible="false"/>
+            app:checkedIconTint="@color/white"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/fridayChip"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="F"
-            app:checkedIconVisible="false"/>
+            app:checkedIconTint="@color/white"/>
         <com.google.android.material.chip.Chip
             android:id="@+id/saturdayChip"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:text="S"
-            app:checkedIconVisible="false"/>
+            app:checkedIconTint="@color/white"/>
     </com.google.android.material.chip.ChipGroup>
 
 
@@ -133,7 +145,9 @@
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/material_on_surface_emphasis_medium"
         android:textSize="30dp"
-        android:text="Nothing yet..."
+        android:hint="Nothing yet..."
+        android:textColor="@color/white"
+        android:background="?attr/editTextBackground"
         android:editable="false"/>
 
     <com.google.android.gms.maps.MapView
@@ -159,5 +173,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:backgroundTint="@color/purple_500"
-        android:src="@android:drawable/star_big_off"/>
+        android:src="@android:drawable/star_big_off"
+        android:layout_margin="20dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

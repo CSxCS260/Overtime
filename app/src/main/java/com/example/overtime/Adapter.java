@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +17,16 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ItemVH> {
     private static final String TAG = "Adapter";
     List<Alarm> alarmList;
+    OnLongClickListener onLongClickListener;
 
-    public Adapter(List<Alarm> alarmList) {
+    public interface OnLongClickListener{
+        void onItemLongClicked(int position);
+    }
+
+
+    public Adapter(List<Alarm> alarmList, OnLongClickListener longClickListener) {
         this.alarmList = alarmList;
+        onLongClickListener = longClickListener;
     }
 
 
@@ -43,7 +51,28 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemVH> {
         }
         holder.timeTV.setText(alarmString);
         holder.amOrPmTV.setText(alarm.getAmOrPm());
-        holder.daysOfWeekTV.setText(alarm.getDaysOfWeek());
+        holder.onOrOff.setChecked(alarm.isOnOrOff());
+        holder.onOrOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alarm.setOnOrOff(!alarm.isOnOrOff());
+            }
+        });
+        String daysofWeekString = "";
+        for (int i = 0; i < alarm.getDaysOfWeek().size(); i++){
+            daysofWeekString += alarm.getDaysOfWeek().get(i) +", ";
+        }
+        if(daysofWeekString.length()>0){
+            daysofWeekString = daysofWeekString.substring(0, daysofWeekString.length()-2);
+        }
+        holder.collapsedLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onLongClickListener.onItemLongClicked(holder.getAdapterPosition());
+                return false;
+            }
+        });
+        holder.daysOfWeekTV.setText(daysofWeekString);
         boolean isExpanded = alarmList.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE:View.GONE);
     }
@@ -57,12 +86,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemVH> {
         private static final String TAG = "Item";
         TextView titleTV, timeTV, amOrPmTV, daysOfWeekTV;
         ConstraintLayout collapsedLayout, expandableLayout;
+        SwitchCompat onOrOff;
         public ItemVH(@NonNull View itemView) {
             super(itemView);
             titleTV = itemView.findViewById(R.id.title);
             timeTV = itemView.findViewById(R.id.time);
             amOrPmTV = itemView.findViewById(R.id.amOrPm);
             daysOfWeekTV = itemView.findViewById(R.id.daysOfTheWeek);
+            onOrOff = itemView.findViewById(R.id.alarmSwitch);
             expandableLayout = itemView.findViewById(R.id.expandedLayout);
             collapsedLayout = itemView.findViewById(R.id.collapsedLayout);
             collapsedLayout.setOnClickListener(new View.OnClickListener() {
@@ -75,5 +106,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemVH> {
             });
 
         }
+
     }
 }

@@ -1,12 +1,13 @@
 package com.example.overtime;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Alarm {
     private String title;
     private Date time;
-    private String daysOfWeek;
+    private ArrayList<String> daysOfWeek;
     private String amOrPm;
     private boolean onOrOff;
     private boolean expanded;
@@ -23,10 +24,10 @@ public class Alarm {
     public void setTime(Date time){
         this.time = time;
     }
-    public String getDaysOfWeek(){
+    public ArrayList<String> getDaysOfWeek(){
         return daysOfWeek;
     }
-    public void setDaysOfWeek(String daysOfWeek){
+    public void setDaysOfWeek(ArrayList<String> daysOfWeek){
         this.daysOfWeek = daysOfWeek;
     }
     public String getAmOrPm(){
@@ -48,7 +49,7 @@ public class Alarm {
         this.expanded = expanded;
     }
 
-    public Alarm(String title, Date time, String amOrPm, String daysOfWeek, boolean onOrOff){
+    public Alarm(String title, Date time, String amOrPm, ArrayList<String> daysOfWeek, boolean onOrOff){
         this.title = title;
         this.time = time;
         this.amOrPm = amOrPm;
