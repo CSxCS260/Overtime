@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     List<Alarm> alarmList;
     MapView mapView;
     FloatingActionButton addFAB;
-    String MAPS_BUNDLE_KEY = "";
     Adapter adapter;
     final int REQUEST_CODE = 200;
     public static final String SHARED_PREFS = "sharedPrefs";

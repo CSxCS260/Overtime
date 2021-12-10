@@ -1,5 +1,6 @@
 package com.example.overtime;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,6 +33,16 @@ public class AddAlarm extends AppCompatActivity {
     private FloatingActionButton doneFAB;
     private String amOrPm;
     private ArrayList<String> daysOfWeek;
+    private LatLng homeLatLng;
+    private String homeName;
+    private LatLng destinationLatLng;
+    private String destinationName;
+    private TextView homeTV;
+    private TextView homeET;
+    private TextView destinationTV;
+    private TextView destinationET;
+    final int REQUEST_CODE_H = 100;
+    final int REQUEST_CODE_D = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +64,26 @@ public class AddAlarm extends AppCompatActivity {
         daysOfWeekChips = findViewById(R.id.daysChipGroup);
         daysOfWeekChips.setChipSpacing(0);
         daysOfWeek = new ArrayList<>();
+        homeTV = findViewById(R.id.startingTV);
+        homeET = findViewById(R.id.startingET);
+        homeET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent (AddAlarm.this, MapsActivity.class);
+                startActivityForResult(mapIntent, REQUEST_CODE_H);
+            }
+        });
+
+        destinationTV = findViewById(R.id.destinationTV);
+        destinationET = findViewById(R.id.destinationET);
+        destinationET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent (AddAlarm.this, MapsActivity.class);
+                startActivityForResult(mapIntent, REQUEST_CODE_D);
+            }
+        });
+
         doneFAB = findViewById(R.id.doneFAB);
         doneFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +95,6 @@ public class AddAlarm extends AppCompatActivity {
                 sendBack.putExtra("amOrPm", amOrPm);
                 checkChips();
                 sendBack.putExtra("daysOfWeek", daysOfWeek);
-
                 if (titleET.getText().toString().equals("")) {
                     Toast.makeText(AddAlarm.this, "Whoops, add a title first!", Toast.LENGTH_SHORT).show();
                 }
@@ -73,7 +104,19 @@ public class AddAlarm extends AppCompatActivity {
                 else if(daysOfWeek.isEmpty() || daysOfWeek == null){
                     Toast.makeText(AddAlarm.this, "Whoops, select a day for the alarm!", Toast.LENGTH_SHORT).show();
                 }
-                else{
+                else if(homeET.getText().toString().equals("")){
+                    Toast.makeText(AddAlarm.this, "Whoops, select a home location!", Toast.LENGTH_SHORT).show();
+                }
+                else if(destinationET.getText().toString().equals("")){
+                    Toast.makeText(AddAlarm.this, "Whoops, select a destination location!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    sendBack.putExtra("homeLocationLat", homeLatLng.latitude);
+                    sendBack.putExtra("homeLocationLong", homeLatLng.longitude);
+                    sendBack.putExtra("homeLocationName", homeName);
+                    sendBack.putExtra("desLocationLat", destinationLatLng.latitude);
+                    sendBack.putExtra("desLocationLong", destinationLatLng.longitude);
+                    sendBack.putExtra("desLocationName", destinationName);
                     setResult(RESULT_OK, sendBack);
                     finish();
                 }
@@ -83,6 +126,7 @@ public class AddAlarm extends AppCompatActivity {
     }
 
     private void checkChips() {
+        daysOfWeek.clear();
         Chip [] chips = new Chip[7];
         chips[0] = findViewById(R.id.sundayChip);
         chips[1] = findViewById(R.id.mondayChip);
@@ -140,5 +184,23 @@ public class AddAlarm extends AppCompatActivity {
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, time.getHours(), time.getMinutes(), false);
         timePickerDialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_H) {
+            homeLatLng = new LatLng(data.getDoubleExtra("locationLat", -1),
+                    data.getDoubleExtra("locationLong", -1));
+            homeName = data.getStringExtra("locationName");
+            homeET.setText(homeName);
+        }
+        else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_D){
+            destinationLatLng = new LatLng(data.getDoubleExtra("locationLat", -1),
+                    data.getDoubleExtra("locationLong", -1));
+            destinationName = data.getStringExtra("locationName");
+            destinationET.setText(destinationName);
+        }
+
     }
 }

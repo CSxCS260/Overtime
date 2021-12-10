@@ -125,7 +125,7 @@
 
 
     <TextView
-        android:id="@+id/destinationTV"
+        android:id="@+id/startingTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/daysChipGroup"
@@ -133,10 +133,36 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
+        android:text="Home"
+        android:textSize="30dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/startingET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/startingTV"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:backgroundTint="@color/material_on_surface_emphasis_medium"
+        android:textSize="30dp"
+        android:hint="Choose home address"
+        android:textColor="@color/white"
+        android:background="?attr/editTextBackground"
+        android:editable="false"/>
+
+    <TextView
+        android:id="@+id/destinationTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/startingET"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:text="Destination"
         android:textSize="30dp"
         android:textStyle="bold"/>
-    <EditText
+    <TextView
         android:id="@+id/destinationET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -145,7 +171,7 @@
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/material_on_surface_emphasis_medium"
         android:textSize="30dp"
-        android:hint="Nothing yet..."
+        android:hint="Choose destination"
         android:textColor="@color/white"
         android:background="?attr/editTextBackground"
         android:editable="false"/>
